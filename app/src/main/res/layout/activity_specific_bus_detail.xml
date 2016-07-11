@@ -27,6 +27,27 @@
             android:text="Route Map Pic"
             android:id="@+id/bmaptxt"
             android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Route Map Pic"
+            android:id="@+id/busnumber"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Route Map Pic"
+            android:id="@+id/srcTerminal"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Route Map Pic"
+            android:id="@+id/destTerminal"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <Button

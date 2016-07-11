@@ -55,7 +55,7 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 		//	{
 
 			try {
-				return getBusList((String)params[1]);
+				return getSpecificBus((String) params[1]);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -71,12 +71,14 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 
 		return null ;//"Network error";
 	}
-	public Object getBusList(String Id) throws ClientProtocolException, IOException
-	{
+	public Object getSpecificBus(String Id) throws ClientProtocolException, IOException
+	{	TBus tBus = new TBus();
 		HttpClient httpclient = Utils.getClient();
-		HttpGet httpget = new HttpGet(RgPreference.host+RgPreference.busDataUrl+"/"+Id);//"http://192.168.10.134/cloud"
 
-		ArrayList<TBus> busList = new ArrayList<TBus>();
+	//	String baseUrl = RgPreference.busDataUrl.replace("{id}", Id);
+		HttpGet httpget = new HttpGet(RgPreference.host+RgPreference.busDataUrl.replace("{id}", Id));//"http://192.168.10.134/cloud"
+
+	//	ArrayList<TBus> busList = new ArrayList<TBus>();
 		String jsonString = "Nothing returned";
 		Log.i("jsonString", "Entered in get data finction");
 		try {
@@ -86,10 +88,14 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 		//	jsonString = "[{\"id\":1,\"busnumber\":23},{\"id\":2,\"busnumber\":22}]";
 			JSONObject jsonObject = new JSONObject(jsonString);
 
+			tBus.setNumber("" +jsonObject.getInt("busnumber"));
+			tBus.setSourceterminal("" +jsonObject.getString("sourceterminal"));
+			tBus.setDestinationterminal("" +jsonObject.getString("destinationterminal"));
+			tBus.setStatus("" +jsonObject.getString("status"));
 /*
 			for(int i = 0  ; i  < jsonArray.length(); i ++)
 			{
-				TBus tBus = new TBus(jsonArray.getJSONObject(i).getInt("id"),jsonArray.getJSONObject(i).getInt("busnumber"));
+			TBus tBusjsonArray.getJSONObject(i).getInt("id"),jsonArray.getJSONObject(i).getInt("busnumber"));
 
 				busList.add(tBus);
 				Log.i("busList :" + i, String.valueOf(jsonArray.getJSONObject(i).getInt("id")));
@@ -97,14 +103,14 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 */
 
 			Log.d("jsonString", "Recived JSOn response: " + jsonString);
-			return jsonObject.getString("busnumber");
+			return tBus;
 			//	return "[{\"Name\":\"Brofen\"},{\"Name\":\"Citrocine\"},{\"Name\":\"Asperine\"}]\n";
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
 
-		return busList;
+		return tBus;
 	}
 public String postSmsToServer(String sender,String message)
 {    HttpClient httpclient = HttpClientBuilder.create().build();//HttpClients.createDefault();//
