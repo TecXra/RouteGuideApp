@@ -30,11 +30,15 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.models.TBus;
+import com.models.TStop;
 
 
 public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 	public AsyncResponse delegate = null;
 	public Context con;
+
+
+	ArrayList<TBus> busList = new ArrayList<TBus>();
 
 	public RequestExecutor(Context con) {
 		super();
@@ -51,20 +55,35 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 
 		if (Utils.isNetworkAvailable(con)) {
 
-		//	if(params[0].toString() == "1")
-		//	{
-
-			try {
-				return getSpecificBus((String) params[1]);
-			} catch (IOException e) {
-				e.printStackTrace();
+			if(params[0].toString() == "1")
+			{
+				try {
+					return getSpecificBus((String) params[1]);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-			//	}
 
+			if(params[0].toString() == "2")
+			{
+				try {
+					return getBusList();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 
-		//	return getData(params);
-		//	return postData(params);
+			if(params[0].toString() == "3")
+			{
+				try {
+					return getStopList();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
 		}
+
 		else {
 			return null ;//"Network error";
 		}
@@ -112,6 +131,111 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 
 		return tBus;
 	}
+
+
+
+	public Object getBusList() throws IOException
+	{
+	//	TBus tBus = new TBus();
+		HttpClient httpclient = Utils.getClient();
+
+		HttpGet httpget = new HttpGet(RgPreference.host+RgPreference.busListUrl);    //"http://192.168.1.100/bus"
+
+
+
+		String jsonString = "";
+		try {
+
+			HttpResponse response = httpclient.execute(httpget);
+			jsonString = EntityUtils.toString(response.getEntity());
+			JSONObject jsonObject = new JSONObject(jsonString);
+
+		//	tBus.setId("" +jsonObject.getInt("id"));
+		//	tBus.setNumber("" +jsonObject.getInt("busnumber"));
+
+			JSONArray jsonArray= new JSONArray(jsonString);
+
+			for (int i = 0; i < jsonArray.length(); i++)
+			{
+				busList.add(new TBus("" + jsonArray.getJSONObject(i).getInt("id"), "" + jsonArray.getJSONObject(i).getInt("busnumber")));
+
+			}
+	//		return busList;
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+
+		return busList;
+	}
+
+
+
+
+
+
+
+	public Object getStopList() throws IOException
+	{
+		//	TBus tBus = new TBus();
+		HttpClient httpclient = Utils.getClient();
+
+		HttpGet httpget = new HttpGet(RgPreference.host+RgPreference.busListUrl);    //"http://192.168.1.100/bus"
+
+		ArrayList<TStop> stopList = new ArrayList<TStop>();
+
+		String jsonString = "";
+		try {
+
+			HttpResponse response = httpclient.execute(httpget);
+			jsonString = EntityUtils.toString(response.getEntity());
+			JSONObject jsonObject = new JSONObject(jsonString);
+
+			//	tBus.setId("" +jsonObject.getInt("id"));
+			//	tBus.setNumber("" +jsonObject.getInt("busnumber"));
+
+			JSONArray jsonArray= new JSONArray(jsonString);
+
+			for (int i = 0; i < jsonArray.length(); i++)
+			{
+				stopList.add(new TStop("" + jsonArray.getJSONObject(i).getInt("id"), "" + jsonArray.getJSONObject(i).getInt("stopname")));
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return stopList;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public String postSmsToServer(String sender,String message)
 {    HttpClient httpclient = HttpClientBuilder.create().build();//HttpClients.createDefault();//
 

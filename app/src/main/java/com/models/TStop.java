@@ -20,6 +20,14 @@ public class TStop {
         // TODO Auto-generated constructor stub
     }
 
+    public String getStopname() {
+        return stopname;
+    }
+
+    public void setStopname(String stopname) {
+        this.stopname = stopname;
+    }
+
     public String getId() {
         return id;
     }
@@ -28,15 +36,19 @@ public class TStop {
         this.id = id;
     }
 
-    public String getStopname() {
-        return stopname;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public void setStopname(String stopname ) {
-        this.stopname = stopname ;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
+    public String getLatitude() {
+        return latitude;
+    }
 
-
-
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 }
