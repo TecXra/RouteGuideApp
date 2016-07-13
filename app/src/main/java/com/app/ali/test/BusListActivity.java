@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class BusListActivity extends AppCompatActivity implements AsyncResponse {
     ListView listView;
-//    ArrayList<TBus> busList = new ArrayList<TBus>();
+    ArrayList<TBus> busList ;
 //    ArrayList<TBus> ar = new ArrayList<TBus>();
 
 
@@ -31,15 +31,15 @@ public class BusListActivity extends AppCompatActivity implements AsyncResponse 
         re.delegate = this;
         re.execute("2");
 
-
 /*
-        ar.add(new TBus("1","23"));
-        ar.add(new TBus("2","22"));
-        ar.add(new TBus("3", "36"));
-        ar.add(new TBus("4", "51"));
-*/
 
-/*
+        busList.add(new TBus("1","23"));
+        busList.add(new TBus("2","22"));
+        busList.add(new TBus("3", "36"));
+        busList.add(new TBus("4", "51"));
+
+
+
         listView= (ListView) findViewById(R.id.buslist);
         BusAdapter ba = new BusAdapter(busList);
         listView.setAdapter(ba);
@@ -55,8 +55,8 @@ public class BusListActivity extends AppCompatActivity implements AsyncResponse 
             }
         });
 
-*/
 
+*/
     }
 
 
@@ -64,24 +64,24 @@ public class BusListActivity extends AppCompatActivity implements AsyncResponse 
     public void onProcessCompelete(Object result) {
 
 
-        ArrayList<TBus> busList = (ArrayList<TBus>)result;
+        busList = (ArrayList<TBus>)result;
 
         listView= (ListView) findViewById(R.id.buslist);
         BusAdapter ba = new BusAdapter(busList);
         listView.setAdapter(ba);
-/*
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
                 TextView t = (TextView) v.findViewById(R.id.bustxt);
                 Intent I = new Intent(BusListActivity.this,SpecificBusDetailActivity.class);
                 I.putExtra("Id",busList.get(position).getId());
                 startActivity(I);
-                Toast.makeText(getBaseContext(), "select : " + t.getText() + "  " + busList.get(position).getId() , Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(), "select : " + t.getText() + "  " + busList.get(position).getId() , Toast.LENGTH_SHORT).show();
             }
         });
 
-*/
+
 
 
 

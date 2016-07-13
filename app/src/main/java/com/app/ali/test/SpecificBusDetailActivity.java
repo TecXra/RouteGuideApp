@@ -25,7 +25,7 @@ public class SpecificBusDetailActivity extends AppCompatActivity implements Asyn
 
         String Id  = getIntent().getStringExtra("Id");
 
-        Toast.makeText(getBaseContext(), "select : " + Id, Toast.LENGTH_SHORT).show();
+  //      Toast.makeText(getBaseContext(), "select : " + Id, Toast.LENGTH_SHORT).show();
 
         busNubmer  = (TextView)findViewById(R.id.busnumber);
         status = (TextView)findViewById(R.id.status);
@@ -50,6 +50,6 @@ public class SpecificBusDetailActivity extends AppCompatActivity implements Asyn
          status.setText(tBus.getStatus());
          srcTerminal.setText(tBus.getSourceterminal());
          destTerminal.setText(tBus.getDestinationterminal());
-        Toast.makeText(getBaseContext(), "Result Recived : "+ tBus.getNumber() , Toast.LENGTH_LONG).show();
+//        Toast.makeText(getBaseContext(), "Result Recived : "+ tBus.getNumber() , Toast.LENGTH_LONG).show();
     }
 }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class StopListActivity extends AppCompatActivity implements AsyncResponse {
     ListView listView;
-    ArrayList<TStop> stopList = new ArrayList<TStop>();
+    ArrayList<TStop> stopList;
 
 
 
@@ -64,22 +64,29 @@ public class StopListActivity extends AppCompatActivity implements AsyncResponse
 
     @Override
     public void onProcessCompelete(Object result) {
+        stopList = (ArrayList<TStop>)result;
 
-      listView = (ListView) findViewById(R.id.stoplist);
+        listView = (ListView) findViewById(R.id.stoplist);
         StopAdapter sa = new StopAdapter(stopList);
         listView .setAdapter(sa);
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
                 TextView t = (TextView) v.findViewById(R.id.stoptxt);
                 Intent I = new Intent(StopListActivity.this,SpecificStopDetailActivity.class);
-                I.putExtra("Name",stopList.get(position).getStopname());
+                I.putExtra("Id",stopList.get(position).getId());
                 startActivity(I);
-                Toast.makeText(getBaseContext(), "select : " + t.getText() + "  " + stopList.get(position).getId() , Toast.LENGTH_SHORT).show();
+                //  I.putExtra("Name",stopList.get(position).getStopname());
+
+//                Toast.makeText(getBaseContext(), "select : " + t.getText() + "  " + stopList.get(position).getId() , Toast.LENGTH_SHORT).show();
                 // ar.get(position).getId();
 //                Toast.makeText(getBaseContext(), "select : " + t.getText() + "  " + stopList.get(position).getId(), Toast.LENGTH_SHORT).show();
             }
         });
 
+
     }
+
 }

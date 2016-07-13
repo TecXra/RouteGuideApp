@@ -16,6 +16,13 @@ public class TStop {
         this.stopname = stopname;
     }
 
+    public TStop(String id) {
+        this.id = id;
+
+    }
+
+
+
     public TStop() {
         // TODO Auto-generated constructor stub
     }

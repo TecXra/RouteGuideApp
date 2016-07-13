@@ -25,6 +25,13 @@ public class TBus
         this.number = number;
     }
 
+    public TBus(String id) {
+        this.id = id;
+
+    }
+
+
+
     public TBus() {
         // TODO Auto-generated constructor stub
     }

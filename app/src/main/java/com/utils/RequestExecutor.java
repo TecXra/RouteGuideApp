@@ -39,6 +39,9 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 
 
 	ArrayList<TBus> busList = new ArrayList<TBus>();
+	ArrayList<TBus> stopbusList = new ArrayList<TBus>();
+	ArrayList<TStop> busstopList = new ArrayList<TStop>();
+
 
 	public RequestExecutor(Context con) {
 		super();
@@ -82,6 +85,15 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 				}
 			}
 
+			if(params[0].toString() == "4")
+			{
+				try {
+					return getSpecificStop((String) params[1]);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
 		}
 
 		else {
@@ -90,6 +102,10 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 
 		return null ;//"Network error";
 	}
+
+
+	//get specific bus detail
+
 	public Object getSpecificBus(String Id) throws ClientProtocolException, IOException
 	{	TBus tBus = new TBus();
 		HttpClient httpclient = Utils.getClient();
@@ -111,7 +127,22 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 			tBus.setSourceterminal("" +jsonObject.getString("sourceterminal"));
 			tBus.setDestinationterminal("" +jsonObject.getString("destinationterminal"));
 			tBus.setStatus("" +jsonObject.getString("status"));
-/*
+
+
+			JSONArray jsonArray = jsonObject.getJSONArray("routes");
+
+			for (int i =0 ; i < jsonArray.length(); i++)
+			{
+				busstopList.add(new TStop("" + jsonArray.getJSONObject(i).getInt("stop_id")));
+
+			}
+
+
+
+	//	return busstopList;
+
+
+			/*
 			for(int i = 0  ; i  < jsonArray.length(); i ++)
 			{
 			TBus tBusjsonArray.getJSONObject(i).getInt("id"),jsonArray.getJSONObject(i).getInt("busnumber"));
@@ -121,7 +152,7 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 			}
 */
 
-			Log.d("jsonString", "Recived JSOn response: " + jsonString);
+//			Log.d("jsonString", "Recived JSOn response: " + jsonString);
 			return tBus;
 			//	return "[{\"Name\":\"Brofen\"},{\"Name\":\"Citrocine\"},{\"Name\":\"Asperine\"}]\n";
 		} catch (JSONException e) {
@@ -133,6 +164,90 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 	}
 
 
+
+	//get specific stop detail
+
+	public Object getSpecificStop(String Id) throws ClientProtocolException, IOException
+	{	TStop tStop = new TStop();
+
+		HttpClient httpclient = Utils.getClient();
+		HttpGet httpget = new HttpGet(RgPreference.host+RgPreference.stopDataUrl.replace("{id}", Id));//"http://192.168.10.134/cloud"
+		String jsonString = "Nothing returned";
+		try {
+
+			HttpResponse response = httpclient.execute(httpget);
+			jsonString = EntityUtils.toString(response.getEntity());
+			JSONObject jsonObject = new JSONObject(jsonString);
+
+			tStop.setId("" +jsonObject.getInt("id"));
+			tStop.setStopname("" +jsonObject.getString("stopname"));
+			tStop.setLatitude("" +jsonObject.getString("latitude"));
+			tStop.setLongitude("" +jsonObject.getString("longitude"));
+
+		//	JSONArray jsonArray= new JSONArray(jsonString);
+			JSONArray jsonArray = jsonObject.getJSONArray("routes");
+
+			for (int i =0 ; i < jsonArray.length(); i++)
+			{
+				stopbusList.add(new TBus("" + jsonArray.getJSONObject(i).getInt("bus_id")));
+
+			}
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return stopbusList ;
+
+	//	return tStop;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// get bus list
 
 	public Object getBusList() throws IOException
 	{
@@ -148,7 +263,7 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 
 			HttpResponse response = httpclient.execute(httpget);
 			jsonString = EntityUtils.toString(response.getEntity());
-			JSONObject jsonObject = new JSONObject(jsonString);
+		//	JSONObject jsonObject = new JSONObject(jsonString);
 
 		//	tBus.setId("" +jsonObject.getInt("id"));
 		//	tBus.setNumber("" +jsonObject.getInt("busnumber"));
@@ -173,37 +288,39 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 
 
 
-
+//get stop list
 
 
 	public Object getStopList() throws IOException
 	{
-		//	TBus tBus = new TBus();
-		HttpClient httpclient = Utils.getClient();
+	//	String test = "";
 
-		HttpGet httpget = new HttpGet(RgPreference.host+RgPreference.busListUrl);    //"http://192.168.1.100/bus"
+		HttpClient httpclient = Utils.getClient();
+		HttpGet httpget = new HttpGet(RgPreference.host+RgPreference.stopListUrl);    //"http://192.168.1.100/stop"
 
 		ArrayList<TStop> stopList = new ArrayList<TStop>();
-
 		String jsonString = "";
 		try {
 
 			HttpResponse response = httpclient.execute(httpget);
 			jsonString = EntityUtils.toString(response.getEntity());
-			JSONObject jsonObject = new JSONObject(jsonString);
+		//	JSONObject jsonObject = new JSONObject(jsonString);
 
 			//	tBus.setId("" +jsonObject.getInt("id"));
 			//	tBus.setNumber("" +jsonObject.getInt("busnumber"));
 
 			JSONArray jsonArray= new JSONArray(jsonString);
 
+	//		test = "" + jsonArray.getJSONObject(1).getInt("id");
+
 			for (int i = 0; i < jsonArray.length(); i++)
 			{
-				stopList.add(new TStop("" + jsonArray.getJSONObject(i).getInt("id"), "" + jsonArray.getJSONObject(i).getInt("stopname")));
+				stopList.add(new TStop("" + jsonArray.getJSONObject(i).getInt("id"), "" + jsonArray.getJSONObject(i).getString("stopname")));
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	//	 return test;
 		return stopList;
 	}
 
