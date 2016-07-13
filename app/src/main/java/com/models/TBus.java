@@ -1,5 +1,7 @@
 package com.models;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ali on 5/24/2016.
  */
@@ -7,7 +9,7 @@ public class TBus
 
 {
 
-
+    public ArrayList<TStop> stopList  = new ArrayList<TStop>();
     String id;
     String number;
     String sourceterminal;
@@ -19,6 +21,17 @@ public class TBus
     String endtime;
 
 
+    public TBus(String id, String number, String sourceterminal, String destinationterminal, String companyname, String farelist, String status, String starttime, String endtime) {
+        this.id = id;
+        this.number = number;
+        this.sourceterminal = sourceterminal;
+        this.destinationterminal = destinationterminal;
+        this.companyname = companyname;
+        this.farelist = farelist;
+        this.status = status;
+        this.starttime = starttime;
+        this.endtime = endtime;
+    }
 
     public TBus(String id, String number) {
         this.id = id;

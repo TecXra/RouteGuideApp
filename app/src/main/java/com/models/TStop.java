@@ -1,5 +1,7 @@
 package com.models;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ali on 5/25/2016.
  */
@@ -10,6 +12,8 @@ public class TStop {
     String stopname;
     String longitude;
     String latitude;
+  public  ArrayList<TBus> busList  = new ArrayList<TBus>();
+
 
     public TStop(String id, String stopname) {
         this.id = id;
@@ -21,7 +25,12 @@ public class TStop {
 
     }
 
-
+    public TStop(String id, String stopname, String longitude, String latitude) {
+        this.id = id;
+        this.stopname = stopname;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
 
     public TStop() {
         // TODO Auto-generated constructor stub

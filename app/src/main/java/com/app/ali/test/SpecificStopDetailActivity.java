@@ -1,5 +1,6 @@
 package com.app.ali.test;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,13 +11,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adapters.BusAdapter;
+import com.adapters.BusNewAdapter;
 import com.models.TBus;
+import com.models.TStop;
 import com.utils.AsyncResponse;
 import com.utils.RequestExecutor;
 
 import java.util.ArrayList;
 
 public class SpecificStopDetailActivity extends AppCompatActivity implements AsyncResponse {
+    private ProgressDialog progress;
 
     ListView listView;
     ArrayList<TBus> stopbusList;
@@ -28,7 +32,18 @@ public class SpecificStopDetailActivity extends AppCompatActivity implements Asy
         setContentView(R.layout.activity_specific_stop_detail);
         String Id  = getIntent().getStringExtra("Id");
 
-        Toast.makeText(getBaseContext(), "select : " + Id, Toast.LENGTH_SHORT).show();
+
+        progress = new ProgressDialog(this);
+        progress.setTitle("Please Wait !!!");
+        progress.setMessage(" Loading ...");
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.show();
+
+
+
+
+//        Toast.makeText(getBaseContext(), "select : " + Id, Toast.LENGTH_SHORT).show();
 
         RequestExecutor re = new RequestExecutor(this);
         re.delegate = this;
@@ -41,11 +56,14 @@ public class SpecificStopDetailActivity extends AppCompatActivity implements Asy
     @Override
     public void onProcessCompelete(Object result) {
 
-        stopbusList = (ArrayList<TBus>)result;
-        listView = (ListView) findViewById(R.id.stopbuslistview);
-        BusAdapter ba = new BusAdapter(stopbusList);
-        listView.setAdapter(ba);
+       TStop stop = (TStop)result;
 
+        progress.dismiss();
+
+        listView = (ListView) findViewById(R.id.stopbusList);
+        BusNewAdapter ba = new BusNewAdapter(stop.busList);
+        listView.setAdapter(ba);
+/*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
@@ -57,6 +75,6 @@ public class SpecificStopDetailActivity extends AppCompatActivity implements Asy
             }
         });
 
-
+*/
     }
 }

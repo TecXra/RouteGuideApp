@@ -1,5 +1,6 @@
 package com.app.ali.test;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,8 +15,14 @@ import com.utils.AsyncResponse;
 import com.utils.RequestExecutor;
 
 import java.util.ArrayList;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class BusListActivity extends AppCompatActivity implements AsyncResponse {
+
+    private ProgressDialog progress;
+
+
     ListView listView;
     ArrayList<TBus> busList ;
 //    ArrayList<TBus> ar = new ArrayList<TBus>();
@@ -27,9 +34,21 @@ public class BusListActivity extends AppCompatActivity implements AsyncResponse 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_list);
 
+        progress = new ProgressDialog(this);
+        progress.setTitle("Please Wait !!!");
+        progress.setMessage(" Loading ...");
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.show();
+
+
+
+
         RequestExecutor re = new RequestExecutor(this);
         re.delegate = this;
         re.execute("2");
+
+
 
 /*
 
@@ -62,6 +81,9 @@ public class BusListActivity extends AppCompatActivity implements AsyncResponse 
 
     @Override
     public void onProcessCompelete(Object result) {
+
+
+        progress.dismiss();
 
 
         busList = (ArrayList<TBus>)result;

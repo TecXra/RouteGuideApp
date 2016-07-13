@@ -11,6 +11,7 @@
 
 
     <LinearLayout
+
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,72 +28,89 @@
             android:text="Route Map Pic"
             android:id="@+id/bmaptxt"
             android:layout_gravity="center_horizontal" />
+
+
+
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/linearLayout">
+
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="Route Map Pic"
+            android:text="bus number"
             android:id="@+id/busnumber"
             android:layout_gravity="center_horizontal" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="Route Map Pic"
+            android:text="Source terminal"
             android:id="@+id/srcTerminal"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/busnumber"
+            android:layout_alignParentStart="true" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="Route Map Pic"
+            android:text="destination terminal"
             android:id="@+id/destTerminal"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/srcTerminal"
+            android:layout_alignParentStart="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Stop List"
-        android:width="200dp"
-        android:textSize="20sp"
-        android:id="@+id/stopbtn"
-        android:layout_below="@+id/linearLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fare List"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Status : "
+            android:width="100dp"
+            android:id="@+id/status"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
 
-        android:width="200dp"
-        android:textSize="20sp"
-        android:id="@+id/farebtn"
-        android:layout_below="@+id/stopbtn"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Stop from which bus passes"
+            android:id="@+id/show"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/destTerminal"
+            android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Status : "
-        android:layout_marginTop="10dp"
-        android:width="100dp"
-        android:id="@+id/status"
-        android:layout_below="@+id/farebtn"
-        android:layout_alignStart="@+id/farebtn" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/show"
+            android:layout_alignParentEnd="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:width="100dp"
-        android:layout_marginTop="10dp"
-        android:id="@+id/statustxt"
-        android:layout_below="@+id/farebtn"
-        android:layout_alignEnd="@+id/farebtn" />
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/busstoplistview"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+
 
 
 </RelativeLayout>

@@ -37,11 +37,9 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 	public AsyncResponse delegate = null;
 	public Context con;
 
-
 	ArrayList<TBus> busList = new ArrayList<TBus>();
 	ArrayList<TBus> stopbusList = new ArrayList<TBus>();
 	ArrayList<TStop> busstopList = new ArrayList<TStop>();
-
 
 	public RequestExecutor(Context con) {
 		super();
@@ -56,41 +54,46 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 	protected Object doInBackground(Object... params) {
 		//write logic here
 
+
 		if (Utils.isNetworkAvailable(con)) {
-
-			if(params[0].toString() == "1")
-			{
-				try {
-					return getSpecificBus((String) params[1]);
-				} catch (IOException e) {
-					e.printStackTrace();
+			switch(params[0].toString()) {
+				case "1": {
+					try {
+						return getSpecificBus((String) params[1]);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					break;
 				}
-			}
 
-			if(params[0].toString() == "2")
-			{
-				try {
-					return getBusList();
-				} catch (IOException e) {
-					e.printStackTrace();
+				case "2": {
+					try {
+						return getBusList();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-			}
 
-			if(params[0].toString() == "3")
-			{
-				try {
-					return getStopList();
-				} catch (IOException e) {
-					e.printStackTrace();
+				case "3": {
+					try {
+						return getStopList();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-			}
 
-			if(params[0].toString() == "4")
-			{
-				try {
-					return getSpecificStop((String) params[1]);
-				} catch (IOException e) {
-					e.printStackTrace();
+
+				case "4": {
+					try {
+						return getSpecificStop((String) params[1]);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+
+
+				default: {
+					return null;
 				}
 			}
 
@@ -99,7 +102,6 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 		else {
 			return null ;//"Network error";
 		}
-
 		return null ;//"Network error";
 	}
 
@@ -129,39 +131,21 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 			tBus.setStatus("" +jsonObject.getString("status"));
 
 
-			JSONArray jsonArray = jsonObject.getJSONArray("routes");
+
+			JSONArray jsonArray = jsonObject.getJSONArray("stops");
 
 			for (int i =0 ; i < jsonArray.length(); i++)
 			{
-				busstopList.add(new TStop("" + jsonArray.getJSONObject(i).getInt("stop_id")));
-
+				tBus.stopList.add(new TStop("" + jsonArray.getJSONObject(i).getInt("id"),"" + jsonArray.getJSONObject(i).getString("stopname"),"" + jsonArray.getJSONObject(i).getString("longitude"),"" + jsonArray.getJSONObject(i).getString("latitude")));
 			}
 
-
-
-	//	return busstopList;
-
-
-			/*
-			for(int i = 0  ; i  < jsonArray.length(); i ++)
-			{
-			TBus tBusjsonArray.getJSONObject(i).getInt("id"),jsonArray.getJSONObject(i).getInt("busnumber"));
-
-				busList.add(tBus);
-				Log.i("busList :" + i, String.valueOf(jsonArray.getJSONObject(i).getInt("id")));
-			}
-*/
-
-//			Log.d("jsonString", "Recived JSOn response: " + jsonString);
-			return tBus;
-			//	return "[{\"Name\":\"Brofen\"},{\"Name\":\"Citrocine\"},{\"Name\":\"Asperine\"}]\n";
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
 
 		return tBus;
-	}
+		}
 
 
 
@@ -183,21 +167,20 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 			tStop.setStopname("" +jsonObject.getString("stopname"));
 			tStop.setLatitude("" +jsonObject.getString("latitude"));
 			tStop.setLongitude("" +jsonObject.getString("longitude"));
-
+		//	tStop.setBus(new TBus("" +jsonObject.getInt("id"),"" + jsonObject.getInt("busnumber")));
 		//	JSONArray jsonArray= new JSONArray(jsonString);
-			JSONArray jsonArray = jsonObject.getJSONArray("routes");
+			JSONArray jsonArray = jsonObject.getJSONArray("buses");
 
 			for (int i =0 ; i < jsonArray.length(); i++)
 			{
-				stopbusList.add(new TBus("" + jsonArray.getJSONObject(i).getInt("bus_id")));
-
+				tStop.busList.add(new TBus("" + jsonArray.getJSONObject(i).getInt("id"),"" + jsonArray.getJSONObject(i).getInt("busnumber")));
 			}
 
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		return stopbusList ;
+		return tStop ;
 
 	//	return tStop;
 	}

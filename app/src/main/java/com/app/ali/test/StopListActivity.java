@@ -1,5 +1,6 @@
 package com.app.ali.test;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,16 +17,28 @@ import com.utils.RequestExecutor;
 import java.util.ArrayList;
 
 public class StopListActivity extends AppCompatActivity implements AsyncResponse {
+
+
+    private ProgressDialog progress;
+
     ListView listView;
     ArrayList<TStop> stopList;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
       super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stop_list);
+
+
+        progress = new ProgressDialog(this);
+        progress.setTitle("Please Wait !!!");
+        progress.setMessage(" Loading ...");
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.show();
+
+
 
         RequestExecutor re = new RequestExecutor(this);
         re.delegate = this;
@@ -64,6 +77,9 @@ public class StopListActivity extends AppCompatActivity implements AsyncResponse
 
     @Override
     public void onProcessCompelete(Object result) {
+        progress.dismiss();
+
+
         stopList = (ArrayList<TStop>)result;
 
         listView = (ListView) findViewById(R.id.stoplist);
