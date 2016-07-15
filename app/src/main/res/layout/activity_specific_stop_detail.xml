@@ -20,13 +20,16 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/linearLayout">
-        <TextView
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/smap"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Stop Map Location"
-            android:id="@+id/smaptxt"
-            android:layout_gravity="center_horizontal" />
+            tools:context="com.app.ali.test.SpecificStopDetailActivity" />
+
     </LinearLayout>
 
 
