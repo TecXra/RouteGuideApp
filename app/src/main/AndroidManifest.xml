@@ -8,12 +8,12 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Route Guide"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="Route Guide"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BusListActivity" />
-        <activity android:name=".StopListActivity" />
-        <activity android:name=".NearestStopActivity" />
-        <activity android:name=".SpecificBusDetailActivity" />
-        <activity android:name=".SpecificStopDetailActivity"></activity>
+        <activity android:name=".BusListActivity"
+            android:label="Bus List"/>
+        <activity android:name=".StopListActivity"
+            android:label="Stop List"/>
+        <activity android:name=".NearestStopActivity"
+            android:label="Nearest Stop List"/>
+        <activity android:name=".SpecificBusDetailActivity"
+            android:label="Bus Detail" />
+        <activity android:name=".SpecificStopDetailActivity"
+            android:label="Bus Detail"
+            ></activity>
     </application>
 
 </manifest>
