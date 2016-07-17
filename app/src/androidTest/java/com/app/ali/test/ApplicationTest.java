@@ -1,6 +1,8 @@
 package com.app.ali.test;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.test.ApplicationTestCase;
 
 /**
@@ -10,4 +12,9 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     public ApplicationTest() {
         super(Application.class);
     }
+
+
+
+
+
 }
