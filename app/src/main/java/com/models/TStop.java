@@ -1,11 +1,12 @@
 package com.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Ali on 5/25/2016.
  */
-public class TStop {
+public class TStop implements Serializable{
 
 
     String id;

@@ -1,7 +1,12 @@
 package com.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +53,7 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 
 	@Override
 	protected void onPostExecute(Object result) {
-		delegate.onProcessCompelete(  result);
+		delegate.onProcessCompelete(result);
 	};
 	@Override
 	protected Object doInBackground(Object... params) {
@@ -60,6 +65,8 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 				case "1": {
 					try {
 						return getSpecificBus((String) params[1]);
+
+
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -104,6 +111,17 @@ public class RequestExecutor extends AsyncTask<Object, Object, Object> {
 		}
 		return null ;//"Network error";
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 
 	//get specific bus detail
