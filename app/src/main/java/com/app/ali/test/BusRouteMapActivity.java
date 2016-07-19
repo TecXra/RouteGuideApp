@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -62,21 +63,6 @@ public class BusRouteMapActivity extends FragmentActivity {
         // map.setMyLocationEnabled(true);
 
 
-        LatLng stop0 = new LatLng(31.450430,74.353328);
-        LatLng stop1 =new LatLng(31.4568,74.3513);
-        LatLng stop2 =new LatLng(31.4566,74.336);
-        LatLng stop3 =new LatLng(31.4646,74.3409);
-        LatLng stop4 =new LatLng(31.457649,74.3322713);
-        LatLng stop5 =new LatLng(31.46,74.327);
-        LatLng stop7 =new LatLng(31.4687,74.3172);
-
-//        setmarker(stop0);
- //       setmarker(stop1);
- //       setmarker(stop2);
-  //      setmarker(stop3);
-   //     setmarker(stop4);
-    //    setmarker(stop5);
-     //   setmarker(stop7);
 
         for (int i=0;i<cordinatelist.size();i++)
         {
@@ -98,7 +84,7 @@ public class BusRouteMapActivity extends FragmentActivity {
             int i= cordinatelist.size()-1;
 
             LatLng origin = markerPoints.get(0);
-            LatLng destination = markerPoints.get(i);
+            LatLng destination = markerPoints.get(2);
 
                     // Getting URL to the Google Directions API
                     String url = getDirectionsUrl(origin, destination);
@@ -115,7 +101,7 @@ public class BusRouteMapActivity extends FragmentActivity {
 
     public void setmarker(LatLng point,String Stopname)
     {
-        if(markerPoints.size()>=10){
+        if(markerPoints.size()>=50){
             return;
         }
 
@@ -142,7 +128,7 @@ public class BusRouteMapActivity extends FragmentActivity {
         }
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerPoints.get(0),
-                12));
+                11));
 
 
         // Add new marker to the Google Map Android API V2
@@ -315,7 +301,7 @@ public class BusRouteMapActivity extends FragmentActivity {
                 // Adding all the points in the route to LineOptions
                 lineOptions.addAll(points);
                 lineOptions.width(5);
-                lineOptions.color(Color.RED);
+                lineOptions.color(Color.BLUE);
             }
 
             // Drawing polyline in the Google Map for the i-th route
@@ -324,7 +310,7 @@ public class BusRouteMapActivity extends FragmentActivity {
         }
     }
 
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -332,7 +318,7 @@ public class BusRouteMapActivity extends FragmentActivity {
         return true;
     }
 
-*/
+
 
 }
 

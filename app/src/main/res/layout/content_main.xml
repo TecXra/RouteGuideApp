@@ -13,8 +13,20 @@
     tools:context="com.app.ali.test.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home Page!" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Source :"
+        android:id="@+id/sourcepoint"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp" />
+
+
+
+
+
+
 </RelativeLayout>
