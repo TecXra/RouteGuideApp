@@ -87,7 +87,16 @@ public class MapsActivity extends AppCompatActivity implements
             markerOptions.position(latLng);
             markerOptions.title("Current Position");
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+            mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 1500, null);
+            Toast.makeText(this,( "Latitude :"+mLastLocation.getLatitude()+ "Longitude :" + mLastLocation.getLongitude()),Toast.LENGTH_SHORT).show();
+
             currLocationMarker = mGoogleMap.addMarker(markerOptions);
+
+
+
+
+
         }
 
         mLocationRequest = new LocationRequest();
@@ -106,7 +115,7 @@ public class MapsActivity extends AppCompatActivity implements
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+      //  LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
 
 
 
@@ -139,12 +148,23 @@ public class MapsActivity extends AppCompatActivity implements
 
         Toast.makeText(this,( "Latitude :"+location.getLatitude()+ "Longitude :" + location.getLongitude()),Toast.LENGTH_SHORT).show();
 
-        //zoom to current position:
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng).zoom(14).build();
+        LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
+        mGoogleMap.addMarker(new MarkerOptions().position(current).title("Current Location ..."));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current,15));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(12), 1500, null);
 
-        mGoogleMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
+
+
+
+        //zoom to current position:
+//        CameraPosition cameraPosition = new CameraPosition.Builder()
+ //               .target(latLng).zoom(14).build();
+
+   //     mGoogleMap.animateCamera(CameraUpdateFactory
+     //           .newCameraPosition(cameraPosition));
+
+
+
 
         //If you only need one location, unregister the listener
         //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
